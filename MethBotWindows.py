@@ -43,7 +43,6 @@ for i in range(number_of_articles):
 driver.get(new_url)
 time.sleep(5)
 driver.find_elements_by_id("button")
-print(type(button))
 
 
 
