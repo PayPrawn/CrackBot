@@ -41,10 +41,10 @@ for i in range(number_of_articles):
             new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
             
 driver.get(new_url)
-time.sleep(10)
-elem = driver.find_elements_by_xpath('//*[@id="add-remove-buttons"]/input')
-elem.click()
-driver.close()
+time.sleep(5)
+driver.find_elements_by_id("button")
+print(type(button))
+
 
 
 
