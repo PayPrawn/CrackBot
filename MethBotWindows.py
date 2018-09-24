@@ -81,3 +81,4 @@ name.send_keys("2020")
 #finds the number of articles, then goes through that number looking for the 'keyword' data. Then it traces back to the url and takes that. 
 
 #data = ((((str(response.json())).split("[{'definition':"))[1]).split("'"))[1]
+
