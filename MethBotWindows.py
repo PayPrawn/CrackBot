@@ -5,7 +5,7 @@ import time
 from selenium import webdriver
 
 driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
-
+starttime = time.time()
 
 
 #this will be an input
@@ -16,11 +16,37 @@ def testparameters():
     global keyword
     global checkoutdelay
     global autofilldelay
+    global name
+    global email
+    global phone
+    global address1
+    global address2
+    global address3
+    global city
+    global zipcode
+    global ccnumber
+    global cvv
+    global cardtype
+    global cardmonth
+    global cardyear
     category = 'jackets'
     colour = ('black').title()
     keyword = ('Bone Varsity Jacket')
     checkoutdelay = float(4.5)
     autofilldelay = float(5)
+    name = 'Test Ing'
+    email = 'test@gmail.com'
+    phone = '01234 567890'
+    address1 = 'test street'
+    address2 = 'more'
+    address3 = 'test'
+    city = 'London'
+    zipcode = 'TE1 1ST'
+    ccnumber = '1234 1234 1234 1234'
+    cvv = '123'
+    cardtype = 'Visa'
+    cardmonth = '01'
+    cardyear = '2020'
 testparameters()
 
 def realtest():
@@ -29,11 +55,53 @@ def realtest():
     global keyword
     global checkoutdelay
     global autofilldelay
+    global name
+    global email
+    global phone
+    global address1
+    global address2
+    global address3
+    global city
+    global zipcode
+    global ccnumber
+    global cvv
+    global cardtype
+    global cardmonth
+    global cardyear
     category = input('category: \n ')
     colour = input('colour: \n ')
     keyword = input('keyword: \n')
     checkoutdelay = float(input('checkout delay: \n'))
     autofilldelay = int(input('autofill delay: \n'))
+    name = input('name: \n')
+    email = input('email: \n')
+    phone = input('phone number: \n')
+    address1 = input('address 1: \n')
+    address2 = input('address 2: \n')
+    address3 = input('address 3: \n')
+    city = input('city: \n')
+    zipcode = input('zip: \n')
+    cardtype = input('card type: \n')
+    ccnumber = input('card number: \n')
+    cvv = input('cvv: \n')
+    cardmonth = input('expiry month: \n')
+    cardyear = input('expiry year: \n')
+
+def autofill():
+    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
+    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)
+    (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
+    (driver.find_element_by_xpath('//*[@id="bo"]')).send_keys(address1)
+    (driver.find_element_by_xpath('//*[@id="oba3"]')).send_keys(address2)
+    (driver.find_element_by_xpath('//*[@id="order_billing_address_3"]')).send_keys(address3)
+    (driver.find_element_by_xpath('//*[@id="order_billing_city"]')).send_keys(city)
+    (driver.find_element_by_xpath('//*[@id="order_billing_zip"]')).send_keys(zipcode)
+    (driver.find_element_by_xpath('//*[@id="cnb"]')).send_keys(ccnumber)
+    (driver.find_element_by_xpath('//*[@id="vval"]')).send_keys(cvv)
+    (driver.find_element_by_xpath('//*[@id="credit_card_type"]')).send_keys(cardtype)
+    (driver.find_element_by_xpath('//*[@id="credit_card_month"]')).send_keys(cardmonth)
+    (driver.find_element_by_xpath('//*[@id="credit_card_year"]')).send_keys(cardyear)
+    (driver.find_element_by_xpath('//*[@id="cart-cc"]/fieldset/p/label/div/ins')).click()
 
 url = 'https://www.supremenewyork.com/shop/all/' + category
 r = requests.get(url)
@@ -54,35 +122,11 @@ driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
 time.sleep(0.1)
+autofill()
 #now in checkout
+runtime = time.time() - starttime
+print(runtime)
 
-
-(driver.find_element_by_id("order_billing_name")).send_keys("Testing Name")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("order_email")).send_keys("testing@gmail.com")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("order_tel")).send_keys("01234 567890")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("bo")).send_keys("123 Test Street")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("oba3")).send_keys("Testing")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("order_billing_address_3")).send_keys("More test")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("order_billing_city")).send_keys("London")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("order_billing_zip")).send_keys("TE1 1ST")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("cnb")).send_keys("1234 1234 1234 1234")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("vval")).send_keys("123")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("credit_card_type")).send_keys("Visa")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("credit_card_month")).send_keys("01")
-time.sleep(autofilldelay/14)
-(driver.find_element_by_id("credit_card_year")).send_keys("2020")
-time.sleep(autofilldelay/14)
 
 
 
