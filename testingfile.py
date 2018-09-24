@@ -1,10 +1,5 @@
-from selenium import webdriver
-driver = webdriver.Chrome()
+import requests
+response = requests.get('https://www.supremenewyork.com/shop/all/jackets')
+text = response.text
+print(text)
 
-driver.get('https://www.supremenewyork.com/shop/jackets/qfpku5g0o/ulxwta3b9')
-elem1 = driver.find_element_by_link_text('add-remove-buttons')
-elem1.click()
-
-
-
-#add-remove-buttons
