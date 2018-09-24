@@ -14,18 +14,26 @@ def testparameters():
     global category
     global colour
     global keyword
+    global checkoutdelay
+    global autofilldelay
     category = 'jackets'
     colour = ('black').title()
     keyword = ('Bone Varsity Jacket')
+    checkoutdelay = float(4.5)
+    autofilldelay = float(5)
 testparameters()
 
 def realtest():
     global category
     global colour
     global keyword
-    category = input('category:\n ')
+    global checkoutdelay
+    global autofilldelay
+    category = input('category: \n ')
     colour = input('colour: \n ')
     keyword = input('keyword: \n')
+    checkoutdelay = float(input('checkout delay: \n'))
+    autofilldelay = int(input('autofill delay: \n'))
 
 url = 'https://www.supremenewyork.com/shop/all/' + category
 r = requests.get(url)
@@ -43,33 +51,33 @@ for i in range(number_of_articles):
 driver.get(new_url)
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 
-name = driver.find_element_by_id("order_billing_name")
-name.send_keys("Testing Name")
-name = driver.find_element_by_id("order_email")
-name.send_keys("testing@gmail.com")
-name = driver.find_element_by_id("order_tel")
-name.send_keys("01234 567890")
-name = driver.find_element_by_id("bo")
-name.send_keys("123 Test Street")
-name = driver.find_element_by_id("oba3")
-name.send_keys("Testing")
-name = driver.find_element_by_id("order_billing_address_3")
-name.send_keys("More test")
-name = driver.find_element_by_id("order_billing_city")
-name.send_keys("London")
-name = driver.find_element_by_id("order_billing_zip")
-name.send_keys("TE1 1ST")
-name = driver.find_element_by_id("cnb")
-name.send_keys("1234 1234 1234 1234")
-name = driver.find_element_by_id("vval")
-name.send_keys("123")
-name = driver.find_element_by_id("credit_card_type")
-name.send_keys("Visa")
-name = driver.find_element_by_id("credit_card_month")
-name.send_keys("01")
-name = driver.find_element_by_id("credit_card_year")
-name.send_keys("2020")
 
+(driver.find_element_by_id("order_billing_name")).send_keys("Testing Name")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("order_email")).send_keys("testing@gmail.com")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("order_tel")).send_keys("01234 567890")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("bo")).send_keys("123 Test Street")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("oba3")).send_keys("Testing")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("order_billing_address_3")).send_keys("More test")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("order_billing_city")).send_keys("London")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("order_billing_zip")).send_keys("TE1 1ST")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("cnb")).send_keys("1234 1234 1234 1234")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("vval")).send_keys("123")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("credit_card_type")).send_keys("Visa")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("credit_card_month")).send_keys("01")
+time.sleep(autofilldelay/14)
+(driver.find_element_by_id("credit_card_year")).send_keys("2020")
+time.sleep(autofilldelay/14)
 
 
 
