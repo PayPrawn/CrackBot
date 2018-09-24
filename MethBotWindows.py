@@ -42,8 +42,11 @@ for i in range(number_of_articles):
 
 driver.get(new_url)
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
-
-name = driver.find_element_by_id("order_billing_name")
+time.sleep(0.1)
+driver.find_element_by_link_text('checkout now').click()
+time.sleep(0.1)
+#now in checkout
+driver.find_element_by_id("order_billing_name")
 name.send_keys("Testing Name")
 name = driver.find_element_by_id("order_email")
 name.send_keys("testing@gmail.com")
