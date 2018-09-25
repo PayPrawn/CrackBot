@@ -38,8 +38,8 @@ def testparameters():
     email = 'test@gmail.com'
     phone = '01234 567890'
     address1 = 'test street'
-    address2 = 'more'
-    address3 = 'test'
+    address2 = ''
+    address3 = ''
     city = 'London'
     zipcode = 'TE1 1ST'
     ccnumber = '1234 1234 1234 1234'
@@ -88,12 +88,14 @@ def realtest():
     cardyear = input('expiry year: \n')
 
 def autofill():
-    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
-    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)
+    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name) 
+    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email) 
     (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
     (driver.find_element_by_xpath('//*[@id="bo"]')).send_keys(address1)
-    (driver.find_element_by_xpath('//*[@id="oba3"]')).send_keys(address2)
-    (driver.find_element_by_xpath('//*[@id="order_billing_address_3"]')).send_keys(address3)
+    if address2 != '':
+        (driver.find_element_by_xpath('//*[@id="oba3"]')).send_keys(address2)
+    if address3 != '':
+        (driver.find_element_by_xpath('//*[@id="order_billing_address_3"]')).send_keys(address3)
     (driver.find_element_by_xpath('//*[@id="order_billing_city"]')).send_keys(city)
     (driver.find_element_by_xpath('//*[@id="order_billing_zip"]')).send_keys(zipcode)
     (driver.find_element_by_xpath('//*[@id="cnb"]')).send_keys(ccnumber)
@@ -117,11 +119,10 @@ for i in range(number_of_articles):
             new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
 
 driver.get(new_url)
+driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
-
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
-time.sleep(0.1)
 autofill()
 #now in checkout
 runtime = time.time() - starttime
