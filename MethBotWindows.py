@@ -2,7 +2,10 @@ import requests
 import re
 import webbrowser
 import time
+import os
 from selenium import webdriver
+import threading
+from threading import Thread
 
 driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
 starttime = time.time()
@@ -89,7 +92,7 @@ def realtest():
 
 def autofill():
     (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name) 
-    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email) 
+    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)
     (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
     (driver.find_element_by_xpath('//*[@id="bo"]')).send_keys(address1)
     if address2 != '':
