@@ -135,8 +135,8 @@ driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
-py (Autofill.JS)
-#autofill()
+
+autofill()
 #if __name__=='__main__':
    #  p1 = Process(target = fillname())
    #  p1.start()
