@@ -3,6 +3,9 @@ import re
 import webbrowser
 import time
 from selenium import webdriver
+import threading
+from threading import Thread
+import sys
 
 driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
 starttime = time.time()
@@ -21,7 +24,7 @@ def testparameters():
     global phone
     global address1
     global address2
-    global address3
+    global address3S
     global city
     global zipcode
     global ccnumber
@@ -87,14 +90,23 @@ def realtest():
     cardmonth = input('expiry month: \n')
     cardyear = input('expiry year: \n')
 
-def autofill():
-    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name) 
+def fillname():
+    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
+
+def fillemail():
     (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email) 
+
+def fillphone():
+    (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
+
+def autofill():
+    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
+    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)      
     (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
     (driver.find_element_by_xpath('//*[@id="bo"]')).send_keys(address1)
-    if address2 != '':
+    if address1 != '':
         (driver.find_element_by_xpath('//*[@id="oba3"]')).send_keys(address2)
-    if address3 != '':
+    if address2 != '':
         (driver.find_element_by_xpath('//*[@id="order_billing_address_3"]')).send_keys(address3)
     (driver.find_element_by_xpath('//*[@id="order_billing_city"]')).send_keys(city)
     (driver.find_element_by_xpath('//*[@id="order_billing_zip"]')).send_keys(zipcode)
@@ -123,7 +135,15 @@ driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
-autofill()
+py (Autofill.JS)
+#autofill()
+#if __name__=='__main__':
+   #  p1 = Process(target = fillname())
+   #  p1.start()
+    # p2 = Process(target = fillemail())
+     #p2.start()
+     #p3 = Process(target = fillphone())
+     #p3.start()
 #now in checkout
 runtime = time.time() - starttime
 print(runtime)
