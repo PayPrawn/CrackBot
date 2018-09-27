@@ -23,7 +23,7 @@ def testparameters():
     global phone
     global address1
     global address2
-    global address3S
+    global address3
     global city
     global zipcode
     global ccnumber
