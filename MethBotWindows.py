@@ -9,7 +9,8 @@ from threading import Thread
 
 driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
 starttime = time.time()
-
+runcode = True
+realtime = ''
 
 #this will be an input
 #keyword = 't-shirts'
@@ -17,8 +18,6 @@ def testparameters():
     global category
     global colour
     global keyword
-    global checkoutdelay
-    global autofilldelay
     global name
     global email
     global phone
@@ -32,24 +31,28 @@ def testparameters():
     global cardtype
     global cardmonth
     global cardyear
-    category = 'jackets'
-    colour = ('black').title()
-    keyword = ('Bone Varsity Jacket')
-    checkoutdelay = float(4.5)
-    autofilldelay = float(5)
-    name = 'Test Ing'
-    email = 'test@gmail.com'
-    phone = '01234 567890'
-    address1 = 'test street'
+    global googleusername
+    global googlepassword
+    global refreshdelay
+    category = 'sweatshirts'
+    refreshdelay = 10 #milliseconds
+    colour = ('Green').title()
+    keyword = ('Love or Hooded Sweatshirt')
+    name = 'Finlay Scott'
+    email = 'finlay.scott@rocketmail.com'
+    phone = '07568566185'
+    address1 = '24 Prestonville Road'
     address2 = ''
     address3 = ''
-    city = 'London'
-    zipcode = 'TE1 1ST'
-    ccnumber = '1234 1234 1234 1234'
+    city = 'Brighton'
+    zipcode = 'BN13TL'
+    ccnumber = '1234 1234 1234 134'
     cvv = '123'
     cardtype = 'Visa'
     cardmonth = '01'
-    cardyear = '2020'
+    cardyear = '2021'
+    googleusername = 'finlay.scott123@gmail.com'
+    googlepassword = 'Stanley2002'
 testparameters()
 
 def realtest():
@@ -90,15 +93,28 @@ def realtest():
     cardmonth = input('expiry month: \n')
     cardyear = input('expiry year: \n')
 
-
-def fillname():
-    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
-
-def fillemail():
-    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email) 
-
-def fillphone():
-    (driver.find_element_by_xpath('//*[@id="order_tel"]')).send_keys(phone)
+def currenttime():
+    global displaytime
+    global realtime
+    currenttime = time.localtime()
+    string = str(currenttime)
+    hour = string.split("tm_hour=")[1].split(',')[0]
+    minute = string.split('tm_min=')[1].split(',')[0]
+    sec = string.split('tm_sec=')[1].split(',')[0]
+    realtime = hour + ':' + minute + ':' + sec
+    if int(minute) < 10:
+        displayminute = '0' + minute
+    else:
+        displayminute = minute
+    if int(hour) < 10: 
+        displayhour = '0' + hour
+    else:
+        displayhour = hour
+    if int(sec) < 10:
+        displaysecond = '0' + sec
+    else:
+        displaysecond = sec
+    displaytime = '[' + displayhour + ':' + displayminute + ':' + displaysecond + ']'
 
 def autofill():
     (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
@@ -118,7 +134,9 @@ def autofill():
     (driver.find_element_by_xpath('//*[@id="credit_card_month"]')).send_keys(cardmonth)
     (driver.find_element_by_xpath('//*[@id="credit_card_year"]')).send_keys(cardyear)
     (driver.find_element_by_xpath('//*[@id="cart-cc"]/fieldset/p/label/div/ins')).click()
+    #driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
 
+correcturl = 'repeat'
 url = 'https://www.supremenewyork.com/shop/all/' + category
 r = requests.get(url)
 response = r.text
@@ -131,14 +149,41 @@ for i in range(number_of_articles):
         searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
         if (searched_k == keyword) and (searched_c == colour):
             new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
+#time
 
-driver.get(new_url)
-driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
+currenttime()
+print(displaytime + ' logging into google...')
+driver.get('https://accounts.google.com/ServiceLogin/identifier?hl=en-gb&flowName=GlifWebSignIn&flowEntry=AddSession')
+driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys(googleusername)
+driver.find_element_by_xpath('//*[@id="identifierNext"]').click()
+time.sleep(1)
+driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input').send_keys(googlepassword)
+driver.find_element_by_xpath('//*[@id="passwordNext"]').click()
+currenttime()
+print(displaytime + ' dodging captcha...')
+time.sleep(1)
+driver.get('https://www.youtube.com/watch?v=u9PNq6Gd8Mg')
+driver.find_element_by_xpath('//*[@id="movie_player"]/div[22]/div[2]/div[1]/span/button').click()
+time.sleep(1)
+#supreme
+while realtime != '13:54:30':
+    time.sleep(1)
+    currenttime()
+    print(displaytime + ' waiting for drop... ')
+currenttime()
+print(displaytime + ' starting autofill...')
+while True:
+    time.sleep((refreshdelay) / 1000)
+    try:
+        driver.get(new_url)
+        break
+    except NameError:
+        time.sleep(1)
+driver.find_element_by_xpath('//*[@id="size"]').send_keys('Medium')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
-py (Autofill.JS)
-#autofill()
+autofill()
 #if __name__=='__main__':
    #  p1 = Process(target = fillname())
    #  p1.start()
@@ -147,6 +192,8 @@ py (Autofill.JS)
      #p3 = Process(target = fillphone())
      #p3.start()
 #now in checkout
+currenttime()
+print(displaytime + ' complete.')
 runtime = time.time() - starttime
 print(runtime)
 

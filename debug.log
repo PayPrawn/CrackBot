@@ -10,3 +10,14 @@
 [0925/165216.083:ERROR:exception_snapshot_win.cc(88)] thread ID 11908 not found in process
 [0925/170458.597:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
 [0925/170458.597:ERROR:exception_snapshot_win.cc(88)] thread ID 9212 not found in process
+[0927/113322.236:ERROR:prune_crash_reports.cc(34)] PruneCrashReportDatabase: Failed to get pending reports
+[0927/123034.467:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0927/123034.467:ERROR:exception_snapshot_win.cc(88)] thread ID 612 not found in process
+[0927/130000.245:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0927/130000.246:ERROR:exception_snapshot_win.cc(88)] thread ID 7000 not found in process
+[0927/130249.427:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0927/130249.427:ERROR:exception_snapshot_win.cc(88)] thread ID 10984 not found in process
+[0927/135254.827:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0927/135254.827:ERROR:exception_snapshot_win.cc(88)] thread ID 6820 not found in process
+[0927/140654.926:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[0927/140654.927:ERROR:exception_snapshot_win.cc(88)] thread ID 9748 not found in process
