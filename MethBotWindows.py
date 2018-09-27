@@ -6,10 +6,7 @@ import os
 from selenium import webdriver
 import threading
 from threading import Thread
-<<<<<<< HEAD
-=======
 import sys
->>>>>>> e680d647048b1d4538a9a087adb7777e398e5b10
 
 driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
 starttime = time.time()
@@ -94,11 +91,6 @@ def realtest():
     cardmonth = input('expiry month: \n')
     cardyear = input('expiry year: \n')
 
-<<<<<<< HEAD
-def autofill():
-    (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name) 
-    (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)
-=======
 def fillname():
     (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
 
