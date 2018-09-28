@@ -1,19 +1,23 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "Build C++ project",
             "type": "shell",
-            "command": "g++",
-            "args": [
-                "-g", "MethBotUI.cpp"
-            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "command": ".\\build.bat"
+        },
+        {
+            "label": "Build & run C++ project",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": ".\\build.bat && .\\bin\\main.exe"
         }
     ]
 }
