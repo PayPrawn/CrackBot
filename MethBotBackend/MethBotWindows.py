@@ -48,13 +48,13 @@ def testparameters():
     address3 = ''
     city = 'Brighton'
     zipcode = 'BN13TL'
-    ccnumber = '4921 8169 4483 5013'
-    cvv = '129'
+    ccnumber = ''
+    cvv = ''
     cardtype = 'Visa'
-    cardmonth = '02'
-    cardyear = '2020'
+    cardmonth = ''
+    cardyear = ''
     googleusername = 'finlay.scott123@gmail.com'
-    googlepassword = 'Stanley2002'
+    googlepassword = ''
 testparameters()
 
 def realtest():
