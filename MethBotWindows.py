@@ -36,8 +36,8 @@ def testparameters():
     global refreshdelay
     category = 'sweatshirts'
     refreshdelay = 10 #milliseconds
-    colour = ('Green').title()
-    keyword = ('Love or Hooded Sweatshirt')
+    colour = ('Black').title()
+    keyword = ('Jewels Hooded Sweatshirt')
     name = 'Finlay Scott'
     email = 'finlay.scott@rocketmail.com'
     phone = '07568566185'
@@ -136,24 +136,28 @@ def autofill():
     (driver.find_element_by_xpath('//*[@id="cart-cc"]/fieldset/p/label/div/ins')).click()
     #driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
 
-correcturl = 'repeat'
-url = 'https://www.supremenewyork.com/shop/all/' + category
-r = requests.get(url)
-response = r.text
-keyword_split = response.split('<h1><a class="name-link"')
-colour_split = response.split('<p><a class="name-link"')
-number_of_articles = len(keyword_split)
-for i in range(number_of_articles):
-    if i != 0:    
-        searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
-        searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
-        if (searched_k == keyword) and (searched_c == colour):
-            new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
+def geturl():
+    global new_url
+    correcturl = 'repeat'
+    url = 'https://www.supremenewyork.com/shop/all/' + category
+    r = requests.get(url)
+    response = r.text
+    keyword_split = response.split('<h1><a class="name-link"')
+    colour_split = response.split('<p><a class="name-link"')
+    number_of_articles = len(keyword_split)
+    for i in range(number_of_articles):
+        if i != 0:    
+            searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
+            searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
+            if (searched_k == keyword) and (searched_c == colour):
+                new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
+
 #time
 
 currenttime()
 print(displaytime + ' logging into google...')
 driver.get('https://accounts.google.com/ServiceLogin/identifier?hl=en-gb&flowName=GlifWebSignIn&flowEntry=AddSession')
+
 driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys(googleusername)
 driver.find_element_by_xpath('//*[@id="identifierNext"]').click()
 time.sleep(1)
@@ -163,23 +167,25 @@ currenttime()
 print(displaytime + ' dodging captcha...')
 time.sleep(1)
 driver.get('https://www.youtube.com/watch?v=u9PNq6Gd8Mg')
-driver.find_element_by_xpath('//*[@id="movie_player"]/div[22]/div[2]/div[1]/span/button').click()
 time.sleep(1)
 #supreme
-while realtime != '13:54:30':
+bing = "bing"
+while realtime != '10:43:45' and bing != "bing":
     time.sleep(1)
     currenttime()
     print(displaytime + ' waiting for drop... ')
 currenttime()
 print(displaytime + ' starting autofill...')
 while True:
-    time.sleep((refreshdelay) / 1000)
     try:
-        driver.get(new_url)
+        get_url()
+        print(new_url)
+        total = new_url + " "
         break
     except NameError:
         time.sleep(1)
-driver.find_element_by_xpath('//*[@id="size"]').send_keys('Medium')
+        print('waiting for website')
+driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
