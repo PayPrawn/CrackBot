@@ -7,7 +7,7 @@ from selenium import webdriver
 import threading
 from threading import Thread
 
-driver = webdriver.Chrome(executable_path='C:\Users\Fin\Desktop\MethBot')
+driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
 starttime = time.time()
 runcode = True
 start = 'start'
@@ -38,9 +38,8 @@ def testparameters():
     category = 'sweatshirts'
 
     refreshdelay = 1 
-    colour = ('Green').title()
-    keyword = ('Love or Hate Hooded Sweatshirt')
-
+    colour = ('Black').title()
+    keyword = ('Cat in the Hat Hooded Sweatshirt')
     name = 'Finlay Scott'
     email = 'finlay.scott@rocketmail.com'
     phone = '07568566185'
@@ -49,11 +48,11 @@ def testparameters():
     address3 = ''
     city = 'Brighton'
     zipcode = 'BN13TL'
-    ccnumber = '1234 1234 1234 134'
-    cvv = '123'
+    ccnumber = '4921 8169 4483 5013'
+    cvv = '129'
     cardtype = 'Visa'
-    cardmonth = '01'
-    cardyear = '2021'
+    cardmonth = '02'
+    cardyear = '2020'
     googleusername = 'finlay.scott123@gmail.com'
     googlepassword = 'Stanley2002'
 testparameters()
@@ -143,20 +142,26 @@ def autofill():
 
 correcturl = 'repeat'
 def findurl():
-    url = 'https://www.supremenewyork.com/shop/all/' + category
-    r = requests.get(url)
-    response = r.text
-    keyword_split = response.split('<h1><a class="name-link"')
-    colour_split = response.split('<p><a class="name-link"')
-    number_of_articles = len(keyword_split)
-    for i in range(number_of_articles):
-        if i != 0:    
-            searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
-            searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
-            if (searched_k == keyword) and (searched_c == colour):
-                new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
-
-                return new_url
+    try:
+        url = 'https://www.supremenewyork.com/shop/all/' + category
+        r = requests.get(url)
+        response = r.text
+        keyword_split = response.split('<h1><a class="name-link"')
+        colour_split = response.split('<p><a class="name-link"')
+        number_of_articles = len(keyword_split)
+        for i in range(number_of_articles):
+            if i != 0:    
+                searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
+                searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
+                if (searched_k == keyword) and (searched_c == colour):
+                    new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
+                    total = new_url + "a"
+        return new_url
+    except UnboundLocalError:
+        return None
+        time.sleep(1)
+    
+    
 #time
 
 currenttime()
@@ -173,29 +178,17 @@ print(displaytime + ' dodging captcha...')
 time.sleep(1)
 driver.get('https://www.youtube.com/watch?v=u9PNq6Gd8Mg')
 
-driver.find_element_by_xpath('//*[@id="movie_player"]/div[22]/div[2]/div[1]/span/button').click()
-time.sleep(630)
+time.sleep(1)
 #supreme
-while (realtime != '17:48:30') and (start != 'start'):
+while (realtime != '11:4:30') and start != 'start':
     time.sleep(1)
     currenttime()
     print(displaytime + ' waiting for drop... ')
 currenttime()
 print(displaytime + ' starting autofill...')
-while True:
-    try:
-        get_url()
-        print(new_url)
-        total = new_url + " "
-        break
-    except NameError:
-        time.sleep(1)
-        print('waiting for website')
-        total = findurl() + 'a'
-        break
-    except TypeError:
-        time.sleep(refreshdelay)
-        print('site not up')
+while findurl() == None:
+    print("site not up")
+    time.sleep(1)
 driver.get(findurl())
 driver.find_element_by_xpath('//*[@id="size"]').send_keys('Medium')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
