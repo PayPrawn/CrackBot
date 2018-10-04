@@ -7,9 +7,10 @@ from selenium import webdriver
 import threading
 from threading import Thread
 
-driver = webdriver.Chrome(executable_path='C:\SeleniumDrivers\chromedriver.exe')
+driver = webdriver.Chrome(executable_path='C:\Users\Fin\Desktop\MethBot')
 starttime = time.time()
 runcode = True
+start = 'start'
 realtime = ''
 
 #this will be an input
@@ -23,7 +24,7 @@ def testparameters():
     global phone
     global address1
     global address2
-    global address3S
+    global address3
     global city
     global zipcode
     global ccnumber
@@ -35,9 +36,11 @@ def testparameters():
     global googlepassword
     global refreshdelay
     category = 'sweatshirts'
-    refreshdelay = 10 #milliseconds
-    colour = ('Black').title()
-    keyword = ('Jewels Hooded Sweatshirt')
+
+    refreshdelay = 1 
+    colour = ('Green').title()
+    keyword = ('Love or Hate Hooded Sweatshirt')
+
     name = 'Finlay Scott'
     email = 'finlay.scott@rocketmail.com'
     phone = '07568566185'
@@ -116,6 +119,7 @@ def currenttime():
         displaysecond = sec
     displaytime = '[' + displayhour + ':' + displayminute + ':' + displaysecond + ']'
 
+
 def autofill():
     (driver.find_element_by_xpath('//*[@id="order_billing_name"]')).send_keys(name)
     (driver.find_element_by_xpath('//*[@id="order_email"]')).send_keys(email)      
@@ -134,11 +138,11 @@ def autofill():
     (driver.find_element_by_xpath('//*[@id="credit_card_month"]')).send_keys(cardmonth)
     (driver.find_element_by_xpath('//*[@id="credit_card_year"]')).send_keys(cardyear)
     (driver.find_element_by_xpath('//*[@id="cart-cc"]/fieldset/p/label/div/ins')).click()
-    #driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
+    (driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
 
-def geturl():
-    global new_url
-    correcturl = 'repeat'
+
+correcturl = 'repeat'
+def findurl():
     url = 'https://www.supremenewyork.com/shop/all/' + category
     r = requests.get(url)
     response = r.text
@@ -152,6 +156,7 @@ def geturl():
             if (searched_k == keyword) and (searched_c == colour):
                 new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
 
+                return new_url
 #time
 
 currenttime()
@@ -167,10 +172,11 @@ currenttime()
 print(displaytime + ' dodging captcha...')
 time.sleep(1)
 driver.get('https://www.youtube.com/watch?v=u9PNq6Gd8Mg')
-time.sleep(1)
+
+driver.find_element_by_xpath('//*[@id="movie_player"]/div[22]/div[2]/div[1]/span/button').click()
+time.sleep(630)
 #supreme
-bing = "bing"
-while realtime != '10:43:45' and bing != "bing":
+while (realtime != '17:48:30') and (start != 'start'):
     time.sleep(1)
     currenttime()
     print(displaytime + ' waiting for drop... ')
@@ -185,10 +191,17 @@ while True:
     except NameError:
         time.sleep(1)
         print('waiting for website')
-driver.find_element_by_xpath('//*[@id="size"]').send_keys('Large')
+        total = findurl() + 'a'
+        break
+    except TypeError:
+        time.sleep(refreshdelay)
+        print('site not up')
+driver.get(findurl())
+driver.find_element_by_xpath('//*[@id="size"]').send_keys('Medium')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
 time.sleep(0.1)
 driver.find_element_by_link_text('checkout now').click()
+
 autofill()
 #if __name__=='__main__':
    #  p1 = Process(target = fillname())
