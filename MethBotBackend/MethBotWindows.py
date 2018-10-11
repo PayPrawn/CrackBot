@@ -35,11 +35,11 @@ def testparameters():
     global googleusername
     global googlepassword
     global refreshdelay
-    category = 'sweatshirts'
-
+    
+    category = 'jackets'
     refreshdelay = 1 
     colour = ('Black').title()
-    keyword = ('Cat in the Hat Hooded Sweatshirt')
+    keyword = ('Leather Trucker Jacket')
     name = 'Finlay Scott'
     email = 'finlay.scott@rocketmail.com'
     phone = '07568566185'
@@ -137,29 +137,27 @@ def autofill():
     (driver.find_element_by_xpath('//*[@id="credit_card_month"]')).send_keys(cardmonth)
     (driver.find_element_by_xpath('//*[@id="credit_card_year"]')).send_keys(cardyear)
     (driver.find_element_by_xpath('//*[@id="cart-cc"]/fieldset/p/label/div/ins')).click()
-    (driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
+    #(driver.find_element_by_xpath('//*[@id="pay"]/input')).click()
 
 
 correcturl = 'repeat'
 def findurl():
-    try:
-        url = 'https://www.supremenewyork.com/shop/all/' + category
-        r = requests.get(url)
-        response = r.text
-        keyword_split = response.split('<h1><a class="name-link"')
-        colour_split = response.split('<p><a class="name-link"')
-        number_of_articles = len(keyword_split)
-        for i in range(number_of_articles):
-            if i != 0:    
-                searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
-                searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
-                if (searched_k == keyword) and (searched_c == colour):
-                    new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
-                    total = new_url + "a"
-        return new_url
-    except UnboundLocalError:
-        return None
-        time.sleep(1)
+    url = 'https://www.supremenewyork.com/shop/all/' + category
+    r = requests.get(url)
+    response = r.text
+    keyword_split = response.split('<h1><a class="name-link"')
+    colour_split = response.split('<p><a class="name-link"')
+    number_of_articles = len(keyword_split)
+    for i in range(number_of_articles):
+        if i != 0:    
+            searched_k = (((keyword_split[i].split('">'))[1]).split('</a>'))[0]
+            searched_c = (((colour_split[i].split('">'))[1]).split('</a>'))[0]
+            if (searched_k == keyword) and (searched_c == colour):
+                new_url = 'https://www.supremenewyork.com' +  (((keyword_split[i].split('href="'))[1]).split('">'))[0]
+                total = new_url + "a"
+                print(total)
+                return new_url
+
     
     
 #time
@@ -180,15 +178,17 @@ driver.get('https://www.youtube.com/watch?v=u9PNq6Gd8Mg')
 
 time.sleep(1)
 #supreme
-while (realtime != '11:4:30') and start != 'start':
+while (realtime != '10:59:30'):
     time.sleep(1)
     currenttime()
     print(displaytime + ' waiting for drop... ')
 currenttime()
 print(displaytime + ' starting autofill...')
+
 while findurl() == None:
     print("site not up")
-    time.sleep(1)
+    time.sleep(0.5)
+
 driver.get(findurl())
 driver.find_element_by_xpath('//*[@id="size"]').send_keys('Medium')
 driver.find_element_by_xpath('//*[@id="add-remove-buttons"]/input').click()
